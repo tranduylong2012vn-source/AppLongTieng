@@ -2,18 +2,39 @@ name: Build Android APK
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.0'
+          flutter-version: '3.16.9'
           channel: 'stable'
-      - run: flutter pub get
-      - run: flutter build apk --release
+
+      - name: Generate Android Wrapper and Build
+        run: |
+          # Sao lưu code hiện có
+          cp -r lib /tmp/lib_backup
+          cp pubspec.yaml /tmp/pubspec_backup.yaml
+          
+          # Tự động dựng khung Android
+          flutter create --org com.applongtieng --platforms=android .
+          
+          # Khôi phục mã nguồn và thư viện
+          rm -rf lib
+          cp -r /tmp/lib_backup lib
+          cp /tmp/pubspec_backup.yaml pubspec.yaml
+          
+          # Cài đặt và đóng gói file APK
+          flutter pub get
+          flutter build apk --release
+
       - uses: actions/upload-artifact@v4
         with:
           name: AppLongTieng-APK
           path: build/app/outputs/flutter-apk/app-release.apk
+
