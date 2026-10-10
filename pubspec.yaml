@@ -1,5 +1,5 @@
 name: app_long_tieng
-description: App Long Tieng Phim Offline S26 Ultra
+description: App Lồng Tiếng Phim Offline S26 Ultra
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -11,8 +11,10 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.6
   file_picker: ^6.1.1
+  permission_handler: ^11.3.0
+  ffmpeg_kit_flutter_full: ^6.0.3
+  sherpa_onnx: ^1.9.11
   path_provider: ^2.1.2
-  shared_preferences: ^2.2.2
 
 flutter:
   uses-material-design: true
